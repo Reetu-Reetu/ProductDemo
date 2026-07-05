@@ -2,30 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Build Maven Project') {
+        stage('Build and Run Tests') {
             steps {
-                bat 'mvnw.cmd clean package -DskipTests'
+                bat 'mvnw.cmd clean package'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                bat ' docker build -t springboot-practice-app .'
+                bat 'docker build -t springboot-practice-app .'
             }
         }
     }
 
     post {
-        success {
-            echo 'Pipeline completed successfully.'
-        }
-
-        failure {
-            echo 'Pipeline failed.'
-        }
-
         always {
-            echo 'Pipeline execution finished.'
+            junit 'target/surefire-reports/*.xml'
         }
     }
 }
