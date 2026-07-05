@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" build -t springboot-practice-app .'
+                bat ' docker build -t springboot-practice-app .'
             }
         }
     }
