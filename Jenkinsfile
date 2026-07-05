@@ -1,16 +1,12 @@
 pipeline {
+
     agent any
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                echo 'Code checked out from GitHub'
-            }
-        }
 
         stage('Build Maven Project') {
             steps {
-                bat 'mvn clean package'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
@@ -19,5 +15,23 @@ pipeline {
                 bat 'docker build -t springboot-practice-app .'
             }
         }
+
     }
+
+    post {
+
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+
+        failure {
+            echo 'Pipeline failed.'
+        }
+
+        always {
+            echo 'Pipeline execution finished.'
+        }
+
+    }
+
 }
