@@ -1,12 +1,10 @@
 pipeline {
-
     agent any
 
     stages {
-
         stage('Build Maven Project') {
             steps {
-                bat 'mvn clean package -DskipTests'
+                bat 'mvnw.cmd clean package -DskipTests'
             }
         }
 
@@ -15,11 +13,9 @@ pipeline {
                 bat 'docker build -t springboot-practice-app .'
             }
         }
-
     }
 
     post {
-
         success {
             echo 'Pipeline completed successfully.'
         }
@@ -31,7 +27,5 @@ pipeline {
         always {
             echo 'Pipeline execution finished.'
         }
-
     }
-
 }
